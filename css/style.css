@@ -26,6 +26,7 @@
 	bottom: 0px;
 	left: 0px;
 	width: 100px;
+	z-index: 100;
 }
 .dotsdock_menu a {
 	position: relative;
