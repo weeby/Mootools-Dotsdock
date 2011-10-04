@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Mootools DocsDock</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script type="text/javascript" src="http://mootools.net/download/get/mootools-core-1.4.0-full-nocompat-yc.js"></script>
+	<script type="text/javascript" src="js/dotsdock.js"></script>
+</head>
+<body>
+	<ul id="example_1">
+		<li>First element</li>
+		<li>Second element</li>
+		<li>Last element</li>
+	</ul>
+	
+	<div id="example_2">
+		<div>Element with content <a href="">link</a>. Lorem ipsum lorem ipsum lorem ipsum.</div>
+		<div>Next element with <b>text format</b><br/>Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum..</div>
+	</div>
+	
+</body>
+<script type="text/javascript">
+	
+	(function() {
+		$('example_1').dotsdock({height: 50});
+		$('example_2').dotsdock({});
+	})();
+
+</script>
+</html>

@@ -1,0 +1,4 @@
+Mootools Dotsdock
+
+Class extending standard Mootools Element class. 
+Add new method called dotsdock who create dock with small menu and auto scrolled items.

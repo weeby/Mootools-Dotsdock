@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+
+.dotsdock {
+	overflow: hidden;
+	position: relative;
+	margin-bottom: 10px;
+}
+.dotsdock > * {
+	padding: 0px;
+	margin: 0px;
+}
+.dotsdock > * > * {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: block;
+	opacity: 0;
+	float: left;
+	padding: 0px;
+	margin: 0px;
+}
+.dotsdock_menu {
+	background-color: #fff;
+	padding-top: 5px;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100px;
+}
+.dotsdock_menu a {
+	position: relative;
+	top: none;
+	left: none;
+	margin-right: 3px;
+	opacity: 1;
+	cursor: pointer;
+	width: 7px;
+	height: 7px;
+	float: left;
+	display: block;
+	background-image: url(../img/dots.png);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+.dotsdock_menu a.selected {
+	background-position: -8px 0px;
+}
