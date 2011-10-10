@@ -19,12 +19,21 @@
 		<div>Next element with <b>text format</b><br/>Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum..</div>
 	</div>
 	
+	<ul id="example_3">
+		<li>One</li>
+		<li>Two</li>
+		<li>Three</li>
+		<li>Four</li>
+		<li>Five</li>
+	</ul>
+	
 </body>
 <script type="text/javascript">
 	
 	(function() {
 		$('example_1').dotsdock({height: 50});
 		$('example_2').dotsdock({});
+		$('example_3').dotsdock({elements_per_page: 2});
 	})();
 
 </script>

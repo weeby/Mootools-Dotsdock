@@ -19,7 +19,8 @@ var DotsDock = new Class({
 		menu_css_class: 'dotsdock_menu',
 		width: 200,
 		height: 100,
-		duration: 5000
+		duration: 5000,
+		elements_per_page: 1
 	},
 	
 	/**
@@ -35,34 +36,63 @@ var DotsDock = new Class({
 			return false;
 		}
 		this._element = element;
+		this.setOptions(options);
 		
-		var elements = this._element.getChildren();
-		var self = this;
-		elements.each(function(item) {
-			self._items.push({'menu': null, 'element': item});
-		});
+		this._render();
 		if (!this._items)
 		{
+			this.destroy();
 			return false;
 		}
 		this.current = this._items[0];
-		
-		this.setOptions(options);
-		this._render();
 		this._showElement(this.current);
 		this._animation.delay(this.options.duration, this);
 		return this;
+	},
+
+	/**
+	 * Create elements list for DotsDock
+	 */
+	_prepareElementsList: function()
+	{
+		var elements = this._element.clone().getChildren();
+		var self = this;
+		
+		var element = new Element('div');
+		for (i=0; i< elements.length; i++)
+		{
+			element.grab(new Element('div', {'html': elements[i].get('html')}));
+			if ((i+1) % this.options.elements_per_page == 0) 
+			{
+				self._items.push({'menu': null, 'element': element});
+				this._wrapper.grab(element);
+				element = null;
+				element = new Element('div');
+			}
+		}
+		if (element.getChildren().length > 0)
+		{
+			self._items.push({'menu': null, 'element': element});
+			this._wrapper.grab(element);
+		}
+
 	},
 	
 	/**
 	 * Create new DotsDock, bulid wrapper and bind main events
 	 */
 	_render: function() {
+		
+		// Hide old DOM element
+		this._element.setStyle('display', 'none');
+		
 		// Render main wrapper
 		this._wrapper = new Element('div', {'class': this.options.dock_css_class});
 		this._wrapper.setStyles({'width': this.options.width, 'height': this.options.height});
 		this._wrapper.inject(this._element, 'before');
-		this._wrapper.grab(this._element);
+		
+		// Add items to wrapper
+		this._prepareElementsList();
 		
 		// Render item dots menu
 		this._menu = new Element('div', {'class': this.options.menu_css_class});
@@ -72,8 +102,10 @@ var DotsDock = new Class({
 		this._items.each(function(item) {
 			var link = new Element('a');
 			link.addEvent('click', self.menuClick.bind(self, item));
+			link.addEvent('mousedown', function(event) { event.stopPropagation();});
 			self._menu.grab(link);
 			item.menu = link;
+			item.element.addClass('item');
 			item.element.setStyles({'width': self.options.width, 'height': self.options.height});
 		});		
 	},
@@ -172,9 +204,9 @@ var DotsDock = new Class({
 	 */
 	destroy: function()
 	{
-		this._element.inject(this._wrapper, 'before');
+		this._element.setStyle('display', 'block');
 		this._wrapper.dispose();
-		this._menu.dispose();
+		this._wrapper = null;
 	}
 
 });
