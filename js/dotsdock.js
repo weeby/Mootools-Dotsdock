@@ -20,7 +20,8 @@ var DotsDock = new Class({
 		width: 200,
 		height: 100,
 		duration: 5000,
-		elements_per_page: 1
+		elements_per_page: 1,
+		show_even_one_dot: false
 	},
 	
 	/**
@@ -100,11 +101,14 @@ var DotsDock = new Class({
 		
 		var self = this;
 		this._items.each(function(item) {
-			var link = new Element('a');
-			link.addEvent('click', self.menuClick.bind(self, item));
-			link.addEvent('mousedown', function(event) { event.stopPropagation();});
-			self._menu.grab(link);
-			item.menu = link;
+			if ((self._items.length == 1 && self.options.show_event_one_dot) || self._items.length > 1)
+			{
+				var link = new Element('a');
+				link.addEvent('click', self.menuClick.bind(self, item));
+				link.addEvent('mousedown', function(event) { event.stopPropagation();});
+				self._menu.grab(new Element('div').grab(link));
+				item.menu = link;
+			}
 			item.element.addClass('item');
 			item.element.setStyles({'width': self.options.width, 'height': self.options.height});
 		});		
@@ -182,7 +186,11 @@ var DotsDock = new Class({
 		}
 		item.element.fade('out');
 		item.element.setStyle('z-index', 1);
-		item.menu.removeClass('selected');
+		if (item.menu)
+		{
+			item.menu.removeClass('selected');	
+		}
+		
 	},
 	
 	/**
@@ -196,7 +204,11 @@ var DotsDock = new Class({
 		}
 		item.element.fade('in');
 		item.element.setStyle('z-index', 100);
-		item.menu.addClass('selected');
+		if (item.menu)
+		{
+			item.menu.addClass('selected');	
+		}
+		
 	},
 	
 	/**
