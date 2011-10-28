@@ -21,7 +21,8 @@ var DotsDock = new Class({
 		height: 100,
 		duration: 5000,
 		elements_per_page: 1,
-		show_even_one_dot: false
+		show_even_one_dot: false,
+		menu_destination: 'inside'
 	},
 	
 	/**
@@ -97,7 +98,14 @@ var DotsDock = new Class({
 		
 		// Render item dots menu
 		this._menu = new Element('div', {'class': this.options.menu_css_class});
-		this._wrapper.grab(this._menu);
+		if (this.options.menu_destination == "inside")
+        {            
+            this._wrapper.grab(this._menu);
+        }
+        else
+        {
+            this.options.menu_destination.grab(this._menu);
+        }
 		
 		var self = this;
 		this._items.each(function(item) {
