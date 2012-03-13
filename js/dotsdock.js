@@ -126,7 +126,6 @@ var DotsDock = new Class({
 			if (!self.options.stop_animation_forever)
 			{
 				self._animation_stop = false;
-				self._animation.delay(self.options.duration, self);	
 			}
 		});
 		
@@ -152,6 +151,7 @@ var DotsDock = new Class({
 		
 		if (this._animation_stop)
 		{
+			this._animation.delay(this.options.duration, this);
 			return false;
 		}
 		var self = this;
