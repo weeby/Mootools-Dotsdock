@@ -22,7 +22,9 @@ var DotsDock = new Class({
 		duration: 5000,
 		elements_per_page: 1,
 		show_even_one_dot: false,
-		menu_destination: 'inside'
+		menu_destination: 'inside',
+		stop_animation_on_hover: true,
+		stop_animation_forever: false
 	},
 	
 	/**
@@ -48,7 +50,10 @@ var DotsDock = new Class({
 		}
 		this.current = this._items[0];
 		this._showElement(this.current);
-		this._animation.delay(this.options.duration, this);
+		if (!this.options.stop_animation_forever)
+		{
+			this._animation.delay(this.options.duration, this);	
+		}
 		return this;
 	},
 
@@ -106,6 +111,24 @@ var DotsDock = new Class({
         {
             this.options.menu_destination.grab(this._menu);
         }
+		var self = this;
+		
+		// Stop animation if stop_animation_on_hover is set to true
+		this._wrapper.addEvent('mouseenter', function(event) {
+			if (self.options.stop_animation_on_hover)
+			{
+				self._animation_stop = true;
+			}
+		});
+		
+		// After user mouse leave wrapper starts animation again
+		this._wrapper.addEvent('mouseleave', function(event) {
+			if (!self.options.stop_animation_forever)
+			{
+				self._animation_stop = false;
+				self._animation.delay(self.options.duration, self);	
+			}
+		});
 		
 		var self = this;
 		this._items.each(function(item) {
